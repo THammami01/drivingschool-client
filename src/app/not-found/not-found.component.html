@@ -1,0 +1,13 @@
+<div class="not-found-page">
+  <div>
+    <h1>Page introuvable</h1>
+    <img src="assets/imgs/page-not-found.png" alt="Page Not Found" />
+
+    <p-button
+      label="Retourner à la page d'acceuil"
+      styleClass="p-button-sm"
+      (click)="handleGoBackHome()"
+      [disabled]="(isLoading$ | async) || false"
+    ></p-button>
+  </div>
+</div>

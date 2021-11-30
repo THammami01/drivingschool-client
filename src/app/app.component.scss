@@ -1,0 +1,77 @@
+.is-loading {
+  display: flex;
+  position: absolute;
+  z-index: 10000000;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000040;
+
+  min-height: 100vh;
+  height: 100%;
+  width: 100vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  div {
+    transform: translateY(-15px);
+    background-color: white;
+    border: 0.1rem solid lightgray;
+    border-radius: 0.25rem;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+// LOADING SPINNER
+:host ::ng-deep .custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite,
+    custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+@keyframes custom-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #16697a;
+  }
+  40% {
+    stroke: rgb(77, 77, 206);
+  }
+  66% {
+    stroke: rgb(54, 54, 121);
+  }
+  80%,
+  90% {
+    stroke: #16697a;
+  }
+}
+
+@keyframes custom-progress-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

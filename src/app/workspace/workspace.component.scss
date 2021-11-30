@@ -1,0 +1,80 @@
+.workspace-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    background: linear-gradient(-45deg, #f5f5f5, white, #e6e0e0, white);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+
+    width: 700px;
+    min-height: 80vh;
+    transform: translateY(-5px);
+    height: fit-content;
+    margin: 1.5rem auto;
+    display: flex;
+    flex-direction: column;
+    border: 0.1rem solid lightgray;
+    border-radius: 0.5rem;
+    padding: 1.5rem 1rem;
+    flex-direction: column;
+    gap: 2rem;
+
+    .first-row {
+      display: flex;
+      justify-content: space-between;
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      button {
+        padding: 0.5rem !important;
+      }
+    }
+
+    .second-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 0.75rem;
+      min-height: 438px;
+
+      .left-side {
+        display: flex;
+        flex-direction: column;
+        align-self: flex-start;
+        gap: 0.5rem;
+
+        div:last-of-type {
+          margin-top: 0.5rem;
+        }
+
+        .my-calendar {
+          margin-top: 1.5rem;
+
+          * {
+            user-select: none !important;
+          }
+        }
+      }
+
+      .right-side {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .p-toast-message-icon.pi.pi-check.ng-star-inserted {
+  display: none !important;
+}
+
+:host ::ng-deep .p-chip {
+  margin-top: .5rem;
+  background: lightblue !important;
+}

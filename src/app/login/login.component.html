@@ -1,0 +1,46 @@
+<div class="login-page">
+  <form>
+    <h1>Bienvenue à notre auto-école</h1>
+
+    <p-messages styleClass="p-mr-2"></p-messages>
+
+    <div>
+      <label>Adresse</label>
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        pInputText
+        class="my-input"
+        placeholder="Saisir l'adresse"
+        [(ngModel)]="formData.email"
+        (keyup.enter)="handleLogin()"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+
+    <div>
+      <label>Mot de passe</label>
+      <p-password
+        type="text"
+        class="p-inputtext-sm"
+        class="my-input"
+        [feedback]="false"
+        placeholder="Saisir le mot de passe"
+        [(ngModel)]="formData.password"
+        (keyup.enter)="handleLogin()"
+        [ngModelOptions]="{ standalone: true }"
+        [toggleMask]="true"
+      >
+      </p-password>
+    </div>
+
+    <div style="width: fit-content">
+      <p-button
+        label="Se connecter"
+        styleClass="p-button-sm"
+        [disabled]="(isLoading$ | async) || false"
+        (click)="handleLogin()"
+      ></p-button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,105 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="workspace-page">
+  <div>
+    <div class="first-row">
+      <h1>Espace de Travail</h1>
+
+      <button
+        pButton
+        type="button"
+        icon="pi pi-sign-out"
+        iconPos="right"
+        class="p-button-danger p-button-sm"
+        (click)="handleLogout()"
+        [disabled]="(isLoading$ | async) || false"
+        pTooltip="Se déconnecter"
+        tooltipPosition="left"
+        [showDelay]="1000"
+        [hideDelay]="300"
+      ></button>
+    </div>
+
+    <div class="second-row">
+      <div class="left-side">
+        <div>
+          <p>Adresse d'auto-école:</p>
+          <p-chip
+            label="..., ..., Béja"
+            icon="pi pi-building"
+            styleClass="p-mr-2"
+          ></p-chip>
+        </div>
+
+        <div>
+          <p>Temps de travail:</p>
+          <p-chip
+            label="08:00-17:00 7/7"
+            icon="pi pi-calendar"
+            styleClass="p-mr-2"
+          ></p-chip>
+        </div>
+
+        <p-calendar
+          [inline]="true"
+          style="zoom: 0.8 !important"
+          selectionMode="multiple"
+          value="11/22/2021, 11/23/2021"
+          class="my-calendar"
+          [disabledDays]="[0]"
+        ></p-calendar>
+      </div>
+
+      <div class="right-side">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Espace Moniteur"
+          class="p-button-outlined p-button-rounded"
+          (click)="handleGoToMonitorPage()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Espace Condidat"
+          class="p-button-outlined p-button-rounded p-button-secondary"
+          (click)="showNotImplToast()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Espace Véhicule"
+          class="p-button-outlined p-button-rounded p-button-secondary"
+          (click)="showNotImplToast()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Espace Séance"
+          class="p-button-outlined p-button-rounded p-button-secondary"
+          (click)="showNotImplToast()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Examens"
+          class="p-button-outlined p-button-rounded p-button-secondary"
+          (click)="showNotImplToast()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Résultats Examens"
+          class="p-button-outlined p-button-rounded p-button-secondary"
+          (click)="showNotImplToast()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,324 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="monitor-space-page">
+  <div>
+    <div class="first-row">
+      <h1>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-arrow-left"
+          iconPos="right"
+          class="p-button-sm p-button-secondary p-button-link"
+          [disabled]="(isLoading$ | async) || false"
+          (click)="handleGoBackHome()"
+        ></button>
+        Espace Moniteur
+      </h1>
+
+      <button
+        pButton
+        type="button"
+        icon="pi pi-sign-out"
+        iconPos="right"
+        class="p-button-danger p-button-sm"
+        (click)="handleLogout()"
+        [disabled]="(isLoading$ | async) || false"
+        pTooltip="Se déconnecter"
+        tooltipPosition="left"
+        [showDelay]="1000"
+        [hideDelay]="300"
+      ></button>
+    </div>
+
+    <div class="second-row">
+      <div style="display: flex; justify-content: space-between">
+        <input
+          type="text"
+          pInputText
+          placeholder="Rechercher un employé"
+          [(ngModel)]="filterKey"
+        />
+
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Ajouter"
+          class="p-button-outlined p-button-secondary"
+          icon="pi pi-user-plus"
+          iconPos="right"
+          (click)="openDialog(null)"
+        ></button>
+      </div>
+
+      <p-table
+        [value]="filteredMonitors"
+        styleClass="p-datatable-striped"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Photo</th>
+            <th>Plus</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-monitor>
+          <tr>
+            <td>{{ monitor._id }}</td>
+            <td>{{ monitor.lastname }}</td>
+            <td>{{ monitor.firstname }}</td>
+            <td>
+              <p-avatar image="assets/imgs/avatar-01.png"></p-avatar>
+            </td>
+            <td style="display: flex; gap: 0.75rem">
+              <i
+                class="pi pi-user-edit"
+                style="cursor: pointer; font-size: 1.4rem"
+                pTooltip="Modifier"
+                tooltipPosition="bottom"
+                [showDelay]="1500"
+                [hideDelay]="300"
+                (click)="openDialog(monitor)"
+              ></i>
+              <i
+                class="pi pi-user-minus"
+                style="cursor: pointer; font-size: 1.3rem"
+                pTooltip="Supprimer"
+                tooltipPosition="bottom"
+                [showDelay]="1500"
+                [hideDelay]="300"
+                (click)="deleteMonitor(monitor._id)"
+              ></i>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <p
+        *ngIf="!filteredMonitors.length"
+        style="margin-top: 0.25rem; text-align: center; color: #777777"
+      >
+        Aucun employé trouvé.
+      </p>
+    </div>
+  </div>
+
+  <p-dialog
+    [header]="
+      dialogMonitorId === '-1'
+        ? 'Nouveau Employé'
+        : 'Employé #' + dialogMonitorId
+    "
+    [(visible)]="isDialogDisplayed"
+    [position]="position"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div
+      style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1rem;
+        padding-top: 0.25rem;
+      "
+    >
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Code personnel"
+        pKeyFilter="pint"
+        [useGrouping]="false"
+        [(ngModel)]="dialogMonitor.personalCode"
+      ></p-inputNumber>
+
+      <p-inputMask
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="CIN"
+        mask="99999999"
+        slotChar="--------"
+        [(ngModel)]="dialogMonitor.nicNumber"
+      ></p-inputMask>
+
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Nom"
+        pInputText
+        [(ngModel)]="dialogMonitor.lastname"
+      />
+
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Prénom"
+        pInputText
+        [(ngModel)]="dialogMonitor.firstname"
+      />
+
+      <p-inputMask
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Date de naissance"
+        mask="99/99/9999"
+        [(ngModel)]="dialogMonitor.birthday"
+      ></p-inputMask>
+
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Adresse"
+        pInputText
+        [(ngModel)]="dialogMonitor.address"
+      />
+
+      <p-inputMask
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Mobile"
+        mask="99 999 999"
+        slotChar="-- --- ---"
+        [(ngModel)]="dialogMonitor.mobile"
+      ></p-inputMask>
+
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Fonction personnel"
+        pInputText
+        [(ngModel)]="dialogMonitor.personalFunction"
+      />
+
+      <p-inputMask
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Date de recruitement"
+        mask="99/99/9999"
+        slotChar="jj/mm/aaaa"
+        [(ngModel)]="dialogMonitor.recruitingDate"
+      ></p-inputMask>
+
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Qualification"
+        pInputText
+        [(ngModel)]="dialogMonitor.qualification"
+      />
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Jours de congé par an"
+        [useGrouping]="false"
+        [(ngModel)]="dialogMonitor.numberOfLeaveDaysByYear"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Salaire brut"
+        [useGrouping]="false"
+        [(ngModel)]="dialogMonitor.grossSalary"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Numéro CNSS"
+        [useGrouping]="false"
+        [(ngModel)]="dialogMonitor.cnssNumber"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Taux de retenue CNSS"
+        [useGrouping]="false"
+        suffix=" %"
+        [(ngModel)]="dialogMonitor.cnssWithholdingRate"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Taux de charge patronale"
+        [useGrouping]="false"
+        suffix=" %"
+        [(ngModel)]="dialogMonitor.taxesRate"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Taux de retenue à la source"
+        [useGrouping]="false"
+        suffix=" %"
+        [(ngModel)]="dialogMonitor.withholdingTaxRate"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Salaire net"
+        [useGrouping]="false"
+        [(ngModel)]="dialogMonitor.netBalance"
+      ></p-inputNumber>
+
+      <p-inputNumber
+        class="p-inputtext-sm"
+        placeholder="Solde"
+        [useGrouping]="false"
+        [(ngModel)]="dialogMonitor.balance"
+      ></p-inputNumber>
+
+      <input
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Saisi par"
+        pInputText
+        [(ngModel)]="dialogMonitor.enteredBy"
+      />
+
+      <p-inputMask
+        type="text"
+        class="p-inputtext-sm"
+        placeholder="Saisi le"
+        mask="99/99/9999"
+        [(ngModel)]="dialogMonitor.enteredAt"
+      ></p-inputMask>
+
+      <div style="width: 100%">
+        <div
+          style="width: fit-content;"
+          pTooltip="Non implémenté"
+          tooltipPosition="right"
+          [showDelay]="1000"
+          [hideDelay]="300"
+        >
+          <p-fileUpload
+            styleClass="p-button-sm"
+            mode="basic"
+            name="demo[]"
+            url="./upload.php"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            (onUpload)="onBasicUpload($event)"
+            chooseLabel="Photo"
+            [disabled]="true"
+          ></p-fileUpload>
+        </div>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div style="padding-top: 0.5rem !important">
+        <p-button
+          icon="pi pi-check"
+          (click)="handleValidate()"
+          [label]="dialogMonitorId === '-1' ? 'Valider' : 'Modifier'"
+          styleClass="p-button-outlined p-button-sm"
+          [disabled]="(isLoading$ | async) || false"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>

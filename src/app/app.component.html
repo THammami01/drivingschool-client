@@ -1,0 +1,12 @@
+<router-outlet></router-outlet>
+
+<div class="is-loading" *ngIf="isLoading$ | async">
+  <div>
+    <p-progressSpinner
+      [style]="{ width: '40px', height: '40px' }"
+      styleClass="custom-spinner"
+      strokeWidth="8"
+      animationDuration="1s"
+    ></p-progressSpinner>
+  </div>
+</div>
